@@ -1,3 +1,39 @@
+# Instalacja
+### Wymagania:
+- PHP **8.2**
+- Postawiony i włączony MySQL
+- Composer w wersji **>=2.0**
+- Node JS w wersji **>=19.0**
+
+### Przygotowanie aplikacji
+- Skopiowanie pliku `.env.example` i wklejenie go jako `.env`
+- Zamiana wartości w kluczach w pliku `.env`:
+  - `DB_HOST` na swój host bazy danych
+  - `DB_PORT` na swój port bazy danych
+  - `DB_DATABASE` na swoją nazwę bazy danych
+  - `DB_USERNAME` na swoją nazwę użytkownika z dostępem do bazy danych wskazanej w kluczu `DB_DATABASE`
+  - `DB_PASSWORD` na hasło użytkownika wskazanego w kluczu `DB_USERNAME`
+- Uruchomienie komend
+```shell
+composer install
+
+php artisan key:generate
+
+php artisan migrate:fresh
+
+npm install
+
+npm run build
+```
+
+### Uruchomienie serwera aplikacji
+- Albo używając XAMPPa
+- Albo lepsza opcja: w folderze głównym projektu uruchomić komendę:
+```shell
+php artisan serve
+```
+Uruchomi ona lokalny serwer z aplikacją dostępny pod adresem http://localhost:8000
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
