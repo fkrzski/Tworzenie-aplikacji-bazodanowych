@@ -3,11 +3,12 @@
 
 <div class="card">
     <div class="card-header">
-        Dodaj autora
+        Dodaj Autora
     </div>
 
     <div class="card-body">
-        <form enctype="multipart/form-data">
+        <form enctype="multipart/form-data" method="POST" action="{{ route('authors.store') }}">
+        @csrf
         <div class="form-group">
             <label class="required" for="name">Imię</label>
             <input class="form-control" type="text" name="name" id="name" value="{{ old('name', '') }}" required>

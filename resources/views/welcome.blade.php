@@ -15,7 +15,7 @@
                             </div>
                         @endif
 
-                        Zadanie: slajd 15
+                        Zadania: slajd 15 i slajd 24
                     </div>
                 </div>
             </div>

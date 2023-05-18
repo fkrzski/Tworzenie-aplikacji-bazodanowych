@@ -3,11 +3,12 @@
 
 <div class="card">
     <div class="card-header">
-        Dodaj książkę
+        Dodaj Książkę
     </div>
 
     <div class="card-body">
-        <form enctype="multipart/form-data">
+        <form enctype="multipart/form-data" method="POST" action="{{ route('books.store') }}">
+            @csrf
             <div class="form-group">
                 <label class="required" for="title">Tytuł</label>
                 <input class="form-control" type="text" name="title" id="title" value="{{ old('title', '') }}" required>
