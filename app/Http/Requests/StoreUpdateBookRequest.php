@@ -21,7 +21,7 @@ class StoreUpdateBookRequest extends FormRequest
             'isbn' => [
                 'string',
                 'required',
-                'unique:books,isbn',
+                'unique:books,isbn'.(request()->route('book')?->id ? ','.request()->route('book')->id: ''),
             ],
             'author_id' => [
                 'required',

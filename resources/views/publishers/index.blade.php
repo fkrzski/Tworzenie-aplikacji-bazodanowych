@@ -41,6 +41,10 @@
                                 <a class="btn btn-xs btn-primary" href="{{ route('publishers.show', $publisher->id) }}">
                                     Podgląd
                                 </a>
+
+                                <a class="btn btn-xs btn-primary" href="{{ route('publishers.edit', $publisher->id) }}">
+                                    Edycja
+                                </a>
                             </td>
                         </tr>
                     @endforeach

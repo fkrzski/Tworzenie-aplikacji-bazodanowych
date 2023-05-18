@@ -47,4 +47,24 @@ class BookController extends Controller
 
         return view('books.show', compact('book'));
     }
+
+    public function edit(Book $book)
+    {
+        $authors = Author::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $categories = Category::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $publishers = Publisher::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $book->load('author', 'category', 'publisher');
+
+        return view('books.edit', compact('authors', 'book', 'categories', 'publishers'));
+    }
+
+    public function update(StoreUpdateBookRequest $request, Book $book)
+    {
+        $book->update($request->all());
+
+        return view('books.show', compact('book'));
+    }
 }

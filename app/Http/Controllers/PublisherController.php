@@ -30,4 +30,16 @@ class PublisherController extends Controller
     {
         return view('publishers.show', compact('publisher'));
     }
+
+    public function edit(Publisher $publisher)
+    {
+        return view('publishers.edit', compact('publisher'));
+    }
+
+    public function update(StoreUpdatePublisherRequest $request, Publisher $publisher)
+    {
+        $publisher->update($request->all());
+
+        return redirect()->route('publishers.show', compact('publisher'));
+    }
 }
