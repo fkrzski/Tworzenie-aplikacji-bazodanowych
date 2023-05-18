@@ -47,6 +47,10 @@
                                 <a class="btn btn-xs btn-primary" href="{{ route('authors.show', $author->id) }}">
                                     Podgląd
                                 </a>
+
+                                <a class="btn btn-xs btn-primary" href="{{ route('authors.edit', $author->id) }}">
+                                    Edycja
+                                </a>
                             </td>
                         </tr>
                     @endforeach

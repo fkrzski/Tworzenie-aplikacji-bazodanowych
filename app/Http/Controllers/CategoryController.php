@@ -30,4 +30,16 @@ class CategoryController extends Controller
     {
         return view('categories.show', compact('category'));
     }
+
+    public function edit(Category $category)
+    {
+        return view('categories.edit', compact('category'));
+    }
+
+    public function update(StoreUpdateCategoryRequest $request, Category $category)
+    {
+        $category->update($request->all());
+
+        return redirect()->route('categories.show', compact('category'));
+    }
 }

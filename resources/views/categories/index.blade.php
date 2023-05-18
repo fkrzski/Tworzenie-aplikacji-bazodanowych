@@ -41,6 +41,10 @@
                                 <a class="btn btn-xs btn-primary" href="{{ route('categories.show', $category->id) }}">
                                     Podgląd
                                 </a>
+
+                                <a class="btn btn-xs btn-primary" href="{{ route('categories.edit', $category->id) }}">
+                                    Edycja
+                                </a>
                             </td>
                         </tr>
                     @endforeach
