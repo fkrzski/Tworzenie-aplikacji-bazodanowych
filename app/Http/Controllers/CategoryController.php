@@ -4,12 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdateCategoryRequest;
 use App\Models\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        $categories = Category::query();
+
+        if ($id = $request->get('id')) {
+            $categories->where('id', '=', $id);
+        }
+
+        if ($name = $request->get('name')) {
+            $categories->where('name', 'LIKE', "%$name%");
+        }
+
+        $categories = $categories->get();
 
         return view('categories.index', compact('categories'));
     }
@@ -41,5 +52,14 @@ class CategoryController extends Controller
         $category->update($request->all());
 
         return redirect()->route('categories.show', compact('category'));
+    }
+
+    public function destroy(Category $category)
+    {
+        $category->delete();
+
+        $categories = Category::all();
+
+        return view('categories.index', compact('categories'));
     }
 }

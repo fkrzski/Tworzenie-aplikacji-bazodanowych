@@ -15,7 +15,7 @@
                             </div>
                         @endif
 
-                        Zadania: slajd 15, slajd 24 i slajd 43
+                        Zadania: slajd 15, slajd 24, slajd 43 i slajd 32
                     </div>
                 </div>
             </div>

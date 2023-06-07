@@ -17,37 +17,86 @@
                 <table class=" table table-bordered table-striped table-hover datatable datatable-Book">
                     <thead>
                     <tr>
-                        <th>
+                        <th class="col-sm-1">
                             #
                         </th>
-                        <th>
+                        <th class="col-1">
                             Tytuł
                         </th>
-                        <th>
-                            numer ISBN
+                        <th class="col-1">
+                            ISBN
                         </th>
-                        <th>
+                        <th class="col-1">
                             Autor
                         </th>
-                        <th>
+                        <th class="col-1">
                             Kategoria
                         </th>
-                        <th>
+                        <th class="col-1">
                             Wydawnictwo
                         </th>
-                        <th>
+                        <th class="col-1">
                             Rok publikacji
                         </th>
-                        <th>
+                        <th class="col-1">
                             Cena
                         </th>
-                        <th>
+                        <th class="col-1">
                             W magazynie
                         </th>
-                        <th>
+                        <th class="col-1">
                             Akcje
                         </th>
                     </tr>
+
+                    <form method="GET">
+                        <tr>
+                            <th>
+                                <input class="form-control form-control-sm" type="number" placeholder="ID" name="id" style="width: 100px" value="{{ request()->get('id') }}">
+                            </th>
+                            <th>
+                                <input class="form-control form-control-sm" type="text" placeholder="Tytuł książki" name="title" value="{{ request()->get('title') }}">
+                            </th>
+                            <th>
+                                <input class="form-control form-control-sm" type="text" placeholder="ISBN" name="isbn" value="{{ request()->get('isbn') }}">
+                            </th>
+                            <th>
+                                <select class="form-control form-control-sm" name="author_id">
+                                    <option value="">Autor</option>
+                                    @foreach($authors as $author)
+                                        <option value="{{ $author->id }}" @selected(request()->get('author_id'))>{{ $author->name }} {{ $author->surname }}</option>
+                                    @endforeach
+                                </select>
+                            </th>
+                            <th>
+                                <select class="form-control form-control-sm" name="category_id">
+                                    <option value="">Kategoria</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" @selected(request()->get('category_id'))>{{ $category->name }}</option>
+                                    @endforeach
+                                </select>                            </th>
+                            <th>
+                                <select class="form-control form-control-sm" name="publisher_id">
+                                    <option value="">Wydawnictwo</option>
+                                    @foreach($publishers as $publisher)
+                                        <option value="{{ $publisher->id }}" @selected(request()->get('publisher_id'))>{{ $publisher->name }}</option>
+                                    @endforeach
+                                </select>                            </th>
+                            <th>
+                                <input class="form-control form-control-sm" type="number" placeholder="Rok publikacji" name="publication_year" value="{{ request()->get('publication_year') }}">
+                            </th>
+                            <th>
+                                <input class="form-control form-control-sm" type="number" step="0.01" placeholder="Cena" name="price" value="{{ request()->get('price') }}">
+                            </th>
+                            <th>
+                                <input class="form-control form-control-sm" type="number" placeholder="W magazynie" name="in_stock" value="{{ request()->get('in_stock') }}">
+                            </th>
+                            <th>
+                                <input type="submit" class="btn btn-xs btn-success" value="Filtruj">
+                                <a href="{{ route('authors.index') }}" type="reset" class="btn btn-xs btn-warning">Wyczyść filtry</a>
+                            </th>
+                        </tr>
+                    </form>
                     </thead>
                     <tbody>
                     @foreach($books as $key => $book)
@@ -87,6 +136,12 @@
                                 <a class="btn btn-xs btn-info" href="{{ route('books.edit', $book->id) }}">
                                     Edytuj
                                 </a>
+
+                                <form action="{{ route('books.destroy', $book->id) }}" method="POST" onsubmit="return confirm('Czy na pewno chcesz usunąć tę książkę?');" style="display: inline-block;">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="submit" class="btn btn-xs btn-danger" value="Usuń">
+                                </form>
                             </td>
                         </tr>
                     @endforeach
