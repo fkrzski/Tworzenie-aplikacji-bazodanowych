@@ -4,12 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdatePublisherRequest;
 use App\Models\Publisher;
+use Illuminate\Http\Request;
 
 class PublisherController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $publishers = Publisher::all();
+        $publishers = Publisher::query();
+
+        if ($id = $request->get('id')) {
+            $publishers->where('id', '=', $id);
+        }
+
+        if ($name = $request->get('name')) {
+            $publishers->where('name', 'LIKE', "%$name%");
+        }
+
+        $publishers = $publishers->get();
 
         return view('publishers.index', compact('publishers'));
     }
@@ -41,5 +52,14 @@ class PublisherController extends Controller
         $publisher->update($request->all());
 
         return redirect()->route('publishers.show', compact('publisher'));
+    }
+
+    public function destroy(Publisher $publisher)
+    {
+        $publisher->delete();
+
+        $publishers = Publisher::all();
+
+        return view('publishers.index', compact('publishers'));
     }
 }
