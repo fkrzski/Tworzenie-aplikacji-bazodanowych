@@ -63,6 +63,6 @@ class AuthorController extends Controller
 
         $authors = Author::all();
 
-        return view('authors.index', compact('authors'));
+        return redirect()->to(route('authors.index'));
     }
 }

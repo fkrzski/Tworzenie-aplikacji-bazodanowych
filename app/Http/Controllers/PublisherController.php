@@ -60,6 +60,6 @@ class PublisherController extends Controller
 
         $publishers = Publisher::all();
 
-        return view('publishers.index', compact('publishers'));
+        return redirect()->to(route('publishers.index'));
     }
 }

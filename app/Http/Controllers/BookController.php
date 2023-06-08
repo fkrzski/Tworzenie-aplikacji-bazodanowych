@@ -119,6 +119,6 @@ class BookController extends Controller
 
         $publishers = Publisher::get();
 
-        return view('books.index', compact('authors', 'books', 'categories', 'publishers'));
+        return redirect()->to(route('books.index'));
     }
 }
