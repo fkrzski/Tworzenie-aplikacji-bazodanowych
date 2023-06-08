@@ -64,7 +64,7 @@
                                 <form action="{{ route('publishers.destroy', $publisher->id) }}" method="POST" onsubmit="return confirm('Czy na pewno chcesz usunąć to wydawnictwo?');" style="display: inline-block;">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <input type="submit" class="btn btn-xs btn-danger" value="Usuń">
+                                    <input type="submit" class="btn btn-xs btn-danger" value="Usuń" @disabled(! $publisher->books->count())>
                                 </form>
                             </td>
                         </tr>

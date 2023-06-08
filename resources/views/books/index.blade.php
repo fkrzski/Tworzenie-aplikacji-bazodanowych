@@ -64,7 +64,7 @@
                                 <select class="form-control form-control-sm" name="author_id">
                                     <option value="">Autor</option>
                                     @foreach($authors as $author)
-                                        <option value="{{ $author->id }}" @selected(request()->get('author_id'))>{{ $author->name }} {{ $author->surname }}</option>
+                                        <option value="{{ $author->id }}" @selected($author->id ==request()->get('author_id'))>{{ $author->name }} {{ $author->surname }}</option>
                                     @endforeach
                                 </select>
                             </th>
@@ -72,14 +72,14 @@
                                 <select class="form-control form-control-sm" name="category_id">
                                     <option value="">Kategoria</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" @selected(request()->get('category_id'))>{{ $category->name }}</option>
+                                        <option value="{{ $category->id }}" @selected($category->id ==request()->get('category_id'))>{{ $category->name }}</option>
                                     @endforeach
                                 </select>                            </th>
                             <th>
                                 <select class="form-control form-control-sm" name="publisher_id">
                                     <option value="">Wydawnictwo</option>
                                     @foreach($publishers as $publisher)
-                                        <option value="{{ $publisher->id }}" @selected(request()->get('publisher_id'))>{{ $publisher->name }}</option>
+                                        <option value="{{ $publisher->id }}" @selected($publisher->id ==request()->get('publisher_id'))>{{ $publisher->name }}</option>
                                     @endforeach
                                 </select>                            </th>
                             <th>
@@ -93,7 +93,7 @@
                             </th>
                             <th>
                                 <input type="submit" class="btn btn-xs btn-success" value="Filtruj">
-                                <a href="{{ route('authors.index') }}" type="reset" class="btn btn-xs btn-warning">Wyczyść filtry</a>
+                                <a href="{{ route('books.index') }}" type="reset" class="btn btn-xs btn-warning">Wyczyść filtry</a>
                             </th>
                         </tr>
                     </form>
