@@ -7,6 +7,7 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -19,7 +20,7 @@ class BookController extends Controller
 
         $publishers = Publisher::get();
 
-        $books = Book::query()->with(['author', 'category', 'publisher']);
+        $books = Book::query()->with(['author', 'categories', 'publisher']);
 
         if ($id = $request->get('id')) {
             $books->where('id', '=', $id);
@@ -38,7 +39,9 @@ class BookController extends Controller
         }
 
         if ($categoryId = $request->get('category_id')) {
-            $books->where('category_id', '=', $categoryId);
+            $books->whereHas('categories', function (Builder $categories) use ($categoryId) {
+                $categories->where('category_id', '=', $categoryId);
+            });
         }
 
         if ($publisherId = $request->get('publisher_id')) {
@@ -66,7 +69,7 @@ class BookController extends Controller
     {
         $authors = Author::selectRaw('id, CONCAT(name, " ", surname) AS full_name')->pluck('full_name', 'id')->prepend('Wybierz autora', '');
 
-        $categories = Category::pluck('name', 'id')->prepend('Wybierz kategorię', '');
+        $categories = Category::pluck('name', 'id');
 
         $publishers = Publisher::pluck('name', 'id')->prepend('Wybierz wydawnictwo', '');
 
@@ -76,26 +79,27 @@ class BookController extends Controller
     public function store(StoreUpdateBookRequest $request)
     {
         $book = Book::create($request->all());
+        $book->categories()->sync($request->get('categories'));
 
         return redirect()->route('books.show', compact('book'));
     }
 
     public function show(Book $book)
     {
-        $book->load('author', 'category', 'publisher');
+        $book->load('author', 'categories', 'publisher');
 
         return view('books.show', compact('book'));
     }
 
     public function edit(Book $book)
     {
-        $authors = Author::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $authors = Author::pluck('name', 'id')->prepend(trans('Wybierz Autora'), '');
 
-        $categories = Category::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $categories = Category::pluck('name', 'id');
 
-        $publishers = Publisher::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $publishers = Publisher::pluck('name', 'id')->prepend(trans('Wybierz Wydawnictwo'), '');
 
-        $book->load('author', 'category', 'publisher');
+        $book->load('author', 'categories', 'publisher');
 
         return view('books.edit', compact('authors', 'book', 'categories', 'publishers'));
     }
@@ -103,6 +107,7 @@ class BookController extends Controller
     public function update(StoreUpdateBookRequest $request, Book $book)
     {
         $book->update($request->all());
+        $book->categories()->sync($request->get('categories'));
 
         return view('books.show', compact('book'));
     }
@@ -110,14 +115,6 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         $book->delete();
-
-        $books = Book::with(['author', 'category', 'publisher'])->get();
-
-        $authors = Author::get();
-
-        $categories = Category::get();
-
-        $publishers = Publisher::get();
 
         return redirect()->to(route('books.index'));
     }

@@ -8,7 +8,7 @@
 
     <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
-            <a href="{{ route('authors.store') }}"
+            <a href="{{ route('authors.index') }}"
                class="c-sidebar-nav-link {{ request()->is("authors") || request()->is("authors/*") ? "c-active" : "" }}">
                 <i class="fa-fw fas fa-user c-sidebar-nav-icon">
 
@@ -17,7 +17,7 @@
             </a>
         </li>
         <li class="c-sidebar-nav-item">
-            <a href="{{ route('categories.store') }}"
+            <a href="{{ route('categories.index') }}"
                class="c-sidebar-nav-link {{ request()->is("categories") || request()->is("categories/*") ? "c-active" : "" }}">
                 <i class="fa-fw fas fa-sitemap c-sidebar-nav-icon">
 
@@ -26,7 +26,16 @@
             </a>
         </li>
         <li class="c-sidebar-nav-item">
-            <a href="{{ route('publishers.store') }}"
+            <a href="{{ route('headquarters.index') }}"
+               class="c-sidebar-nav-link {{ request()->is("headquarters") || request()->is("headquarters/*") ? "c-active" : "" }}">
+                <i class="fa-fw fas fa-building c-sidebar-nav-icon">
+
+                </i>
+                Siedziby wydawnictw
+            </a>
+        </li>
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('publishers.index') }}"
                class="c-sidebar-nav-link {{ request()->is("publishers") || request()->is("publishers/*") ? "c-active" : "" }}">
                 <i class="fa-fw fas fa-building c-sidebar-nav-icon">
 
@@ -35,7 +44,7 @@
             </a>
         </li>
         <li class="c-sidebar-nav-item">
-            <a href="{{ route('books.store') }}"
+            <a href="{{ route('books.index') }}"
                class="c-sidebar-nav-link {{ request()->is("books") || request()->is("books/*") ? "c-active" : "" }}">
                 <i class="fa-fw fas fa-book c-sidebar-nav-icon">
 

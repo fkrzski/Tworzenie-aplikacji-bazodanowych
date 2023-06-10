@@ -42,15 +42,18 @@
                     @endif
                 </div>
                 <div class="form-group">
-                    <label class="required" for="category_id">Kategoria</label>
-                    <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
+                    <label for="categories">Kategoria</label>
+                    <div class="form-check">
                         @foreach($categories as $id => $entry)
-                            <option value="{{ $id }}" {{ (old('category_id') ? old('category_id') : $book->category->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                            <input class="form-check-input" name="categories[]" type="checkbox" value="{{ $id }}" id="flexCheckDefault" @checked($book->categories->contains($id))>
+                            <label class="form-check-label" for="flexCheckDefault">
+                                {{ $entry }}
+                            </label> <br>
                         @endforeach
-                    </select>
-                    @if($errors->has('category'))
+                    </div>
+                    @if($errors->has('categories'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('category') }}
+                            {{ $errors->first('categories') }}
                         </div>
                     @endif
                 </div>

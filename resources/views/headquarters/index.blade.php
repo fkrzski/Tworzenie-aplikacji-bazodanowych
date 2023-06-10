@@ -2,14 +2,14 @@
 @section('content')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('publishers.create') }}">
-                Dodaj Wydawnictwo
+            <a class="btn btn-success" href="{{ route('headquarters.create') }}">
+                Dodaj Siedzibę
             </a>
         </div>
     </div>
     <div class="card">
         <div class="card-header">
-            Lista Wydawnictw
+            Lista Siedzib
         </div>
 
         <div class="card-body">
@@ -21,10 +21,10 @@
                             #
                         </th>
                         <th>
-                            Nazwa
+                            Miasto
                         </th>
                         <th>
-                            Siedziba
+                            Wydawnictwo
                         </th>
                         <th>
                             Akcje
@@ -37,47 +37,48 @@
                                 <input class="form-control" type="number" placeholder="ID" name="id" style="width: 100px" value="{{ request()->get('id') }}">
                             </th>
                             <th>
-                                <input class="form-control" type="text" placeholder="Nazwa wydawnictwa" name="name" value="{{ request()->get('name') }}">
+                                <input class="form-control" type="text" placeholder="Miasto" name="city" value="{{ request()->get('city') }}">
                             </th>
                             <th>
-                                <select class="form-control form-control" name="headquarter_id">
-                                    <option value="">Siedziba</option>
-                                    @foreach($headquarters as $headquarter)
-                                        <option value="{{ $headquarter->id }}" @selected($headquarter->id == request()->get('headquarter_id'))>{{ $headquarter->city }}</option>
+                                <select class="form-control form-control" name="publisher_id">
+                                    <option value="">Wydawnictwo</option>
+                                    @foreach($publishers as $publisher)
+                                        <option value="{{ $publisher->id }}" @selected($publisher->id ==request()->get('publisher_id'))>{{ $publisher->name }}</option>
                                     @endforeach
-                                </select>                            </th>
+                                </select>
+                            </th>
                             <th>
                                 <input type="submit" class="btn btn-success" value="Filtruj">
-                                <a href="{{ route('publishers.index') }}" type="reset" class="btn btn-warning">Wyczyść filtry</a>
+                                <a href="{{ route('headquarters.index') }}" type="reset" class="btn btn-warning">Wyczyść filtry</a>
                             </th>
                         </tr>
                     </form>
                     </thead>
                     <tbody>
-                    @foreach($publishers as $key => $publisher)
-                        <tr data-entry-id="{{ $publisher->id }}">
+                    @foreach($headquarters as $key => $headquarter)
+                        <tr data-entry-id="{{ $headquarter->id }}">
                             <td>
-                                {{ $publisher->id ?? '' }}
+                                {{ $headquarter->id ?? '' }}
                             </td>
                             <td>
-                                {{ $publisher->name ?? '' }}
+                                {{ $headquarter->city ?? '' }}
                             </td>
                             <td>
-                                {{ $publisher->headquarter?->city ?? '' }}
+                                {{ $headquarter->publisher?->name ?? '' }}
                             </td>
                             <td>
-                                <a class="btn btn-xs btn-primary" href="{{ route('publishers.show', $publisher->id) }}">
+                                <a class="btn btn-xs btn-primary" href="{{ route('headquarters.show', ['headquarters' => $headquarter->id]) }}">
                                     Podgląd
                                 </a>
 
-                                <a class="btn btn-xs btn-primary" href="{{ route('publishers.edit', $publisher->id) }}">
+                                <a class="btn btn-xs btn-primary" href="{{ route('headquarters.edit', ['headquarters' => $headquarter->id]) }}">
                                     Edycja
                                 </a>
 
-                                <form action="{{ route('publishers.destroy', $publisher->id) }}" method="POST" onsubmit="return confirm('Czy na pewno chcesz usunąć to wydawnictwo?');" style="display: inline-block;">
+                                <form action="{{ route('headquarters.destroy', $headquarter->id) }}" method="POST" onsubmit="return confirm('Czy na pewno chcesz usunąć to wydawnictwo?');" style="display: inline-block;">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <input type="submit" class="btn btn-xs btn-danger" value="Usuń" @disabled($publisher->books->count())>
+                                    <input type="submit" class="btn btn-xs btn-danger" value="Usuń" @disabled($headquarter->publisher)>
                                 </form>
                             </td>
                         </tr>

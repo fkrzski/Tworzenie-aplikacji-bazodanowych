@@ -30,7 +30,7 @@
                             Autor
                         </th>
                         <th class="col-1">
-                            Kategoria
+                            Kategorie
                         </th>
                         <th class="col-1">
                             Wydawnictwo
@@ -114,7 +114,9 @@
                                 {{ $book->author->name ?? '' }} {{ $book->author->surname ?? '' }}
                             </td>
                             <td>
-                                {{ $book->category->name ?? '' }}
+                                @foreach($book->categories as $key => $category)
+                                    {{ $category->name ?? '' }},
+                                @endforeach
                             </td>
                             <td>
                                 {{ $book->publisher->name ?? '' }}

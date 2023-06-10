@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdatePublisherRequest;
+use App\Models\Headquarter;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
 
@@ -20,18 +21,30 @@ class PublisherController extends Controller
             $publishers->where('name', 'LIKE', "%$name%");
         }
 
+        if ($headquarterId = $request->get('headquarter_id')) {
+            $publishers->where('headquarter_id', '=', $headquarterId);
+        }
+
         $publishers = $publishers->get();
 
-        return view('publishers.index', compact('publishers'));
+        $headquarters = Headquarter::get();
+
+        return view('publishers.index', compact('publishers', 'headquarters'));
     }
 
     public function create()
     {
-        return view('publishers.create');
+        $headquarters = Headquarter::pluck('city', 'id')->prepend('Wybierz siedzibę', '');
+
+        return view('publishers.create', compact('headquarters'));
     }
 
     public function store(StoreUpdatePublisherRequest $request)
     {
+        Publisher::where('headquarter_id', '=', $request->get('headquarter_id'))->update([
+            'headquarter_id' => null,
+        ]);
+
         $publisher = Publisher::create($request->all());
 
         return redirect()->route('publishers.show', compact('publisher'));
@@ -44,11 +57,17 @@ class PublisherController extends Controller
 
     public function edit(Publisher $publisher)
     {
-        return view('publishers.edit', compact('publisher'));
+        $headquarters = Headquarter::pluck('city', 'id')->prepend('Wybierz siedzibę', '');
+
+        return view('publishers.edit', compact('publisher', 'headquarters'));
     }
 
     public function update(StoreUpdatePublisherRequest $request, Publisher $publisher)
     {
+        Publisher::where('headquarter_id', '=', $request->get('headquarter_id'))->update([
+            'headquarter_id' => null,
+        ]);
+
         $publisher->update($request->all());
 
         return redirect()->route('publishers.show', compact('publisher'));

@@ -19,6 +19,19 @@
             @endif
         </div>
         <div class="form-group">
+            <label for="headquarter_id">Siedziba</label>
+            <select class="form-control select2" name="headquarter_id" id="headquarter_id">
+                @foreach($headquarters as $id => $entry)
+                    <option value="{{ $id }}" {{ old('headquarter_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                @endforeach
+            </select>
+            @if($errors->has('headquarter_id'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('headquarter_id') }}
+                </div>
+            @endif
+        </div>
+        <div class="form-group">
             <button class="btn btn-danger" type="submit">
                 Dodaj
             </button>
