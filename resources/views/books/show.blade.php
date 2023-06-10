@@ -49,10 +49,12 @@
                     </tr>
                     <tr>
                         <th>
-                            Kategoria
+                            Kategorie
                         </th>
                         <td>
-                            {{ $book->category->name ?? '' }}
+                            @foreach($book->categories as $key => $category)
+                                {{ $category->name ?? '' }},
+                            @endforeach
                         </td>
                     </tr>
                     <tr>

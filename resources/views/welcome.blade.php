@@ -15,7 +15,7 @@
                             </div>
                         @endif
 
-                        Zadania: slajd 15, slajd 24, slajd 43 i slajd 32
+                        Zadania: slajd 15, slajd 24, slajd 43, slajd 32 i Na ocenę 5,0 (lub dla podwyższenia liczby punktów)
                     </div>
                 </div>
             </div>

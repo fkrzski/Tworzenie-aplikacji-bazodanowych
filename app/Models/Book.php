@@ -5,6 +5,8 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Book extends Model
 {
@@ -37,17 +39,17 @@ class Book extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(Author::class, 'author_id');
     }
 
-    public function category()
+    public function categories(): BelongsToMany
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsToMany(Category::class, 'category_book');
     }
 
-    public function publisher()
+    public function publisher(): BelongsTo
     {
         return $this->belongsTo(Publisher::class, 'publisher_id');
     }

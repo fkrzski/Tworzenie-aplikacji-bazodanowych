@@ -27,10 +27,6 @@ class StoreUpdateBookRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'category_id' => [
-                'required',
-                'integer',
-            ],
             'publisher_id' => [
                 'required',
                 'integer',
